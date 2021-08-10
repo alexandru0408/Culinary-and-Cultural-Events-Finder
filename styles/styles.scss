@@ -1,0 +1,15 @@
+@use 'reset';
+@use 'not-found-page';
+@use '../components/Layout/layout';
+@use '../components/Header/header';
+@use '../components/Footer/footer';
+@use '../components/Hero/hero';
+
+h1 {
+  font-size: 3rem;
+  color: white;
+}
+html,
+body {
+  background: #02182b;
+}

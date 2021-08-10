@@ -1,0 +1,17 @@
+.footer {
+  margin: 100px 0 40px;
+  text-align: center;
+  color: #68c5db;
+  p {
+    margin: 5px 0;
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      margin-top: 10px;
+      &:hover {
+        color: #0197f6;
+      }
+    }
+  }
+}

@@ -1,7 +1,9 @@
+import Layout from "@/components/Layout/Layout";
+
 export default function EventView() {
   return (
-    <div>
+    <Layout>
       <h1>Event</h1>
-    </div>
+    </Layout>
   );
 }
