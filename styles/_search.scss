@@ -1,0 +1,13 @@
+.search {
+  h1 {
+    display: inline-block;
+    margin-bottom: 40px;
+  }
+
+  &__back {
+    display: block;
+    margin-top: 40px;
+    color: #0197f6;
+    margin-bottom: 20px;
+  }
+}

@@ -1,21 +1,31 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 import { API_URL } from "@/config/index";
 import Layout from "@/components/Layout/Layout";
+import Modal from "@/components/Modal/Modal";
+import ImgUpload from "@/components/ImgUpload/ImgUpload";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AiOutlineFileAdd } from "react-icons/ai";
+import moment from "moment";
 
-export default function AddEventView() {
+export default function EditEventView({ event }) {
   const [values, setValues] = useState({
-    name: "",
-    countries: "",
-    address: "",
-    date: "",
-    time: "",
-    description: "",
+    name: event.name,
+    countries: event.countries,
+    address: event.address,
+    date: event.date,
+    time: event.time,
+    description: event.description,
   });
+
+  const [imagePreview, setImagePreview] = useState(
+    event.image ? event.image.formats.thumbnail.url : null
+  );
+  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
 
@@ -27,8 +37,8 @@ export default function AddEventView() {
       toast.error("Bitte alle Formularfelder ausfüllen ");
     }
 
-    const res = await fetch(`${API_URL}/festivals`, {
-      method: "POST",
+    const res = await fetch(`${API_URL}/festivals/${event.id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -47,16 +57,23 @@ export default function AddEventView() {
     setValues({ ...values, [name]: value });
   };
 
+  const imageUploaded = async (e) => {
+    const res = await fetch(`${API_URL}/festivals/${event.id}`);
+    const data = await res.json();
+    setImagePreview(data.image.formats.thumbnail.url);
+    setShowModal(false);
+  };
+
   return (
     <Layout title="Add New Event">
-      <div className="add">
+      <div className="edit">
         <Link href="/events">
-          <a className="add__back">{"<"} Zurück</a>
+          <a className="edit__back">{"<"} Zurück</a>
         </Link>
-        <h1>FESTIVAL HINZUFÜGEN</h1>
+        <h1>FESTIVAL BEARBEITEN</h1>
         <ToastContainer />
-        <form className="add__form" onSubmit={handleSubmit}>
-          <div className="add__grid">
+        <form className="edit__form" onSubmit={handleSubmit}>
+          <div className="edit__grid">
             <div>
               <label htmlFor="name">Name des Festivals</label>
               <input
@@ -93,7 +110,7 @@ export default function AddEventView() {
                 type="date"
                 name="date"
                 id="date"
-                value={values.date}
+                value={moment(values.date).format("yyyy-MM-DD")}
                 onChange={handleInputChange}
               />
             </div>
@@ -118,9 +135,39 @@ export default function AddEventView() {
               onChange={handleInputChange}
             ></textarea>
           </div>
-          <input type="submit" value="Festival Hinzufügen" className="btn" />
+          <input type="submit" value="Festival Aktualisieren" className="btn" />
         </form>
+        <h2>Bild des Festivals</h2>
+        {imagePreview ? (
+          <Image src={imagePreview} height={100} width={170} />
+        ) : (
+          <div>
+            <p>Kein Bild hochgeladen</p>
+          </div>
+        )}
+        <div className="edit__add-image-btns">
+          <button
+            className="edit__add-image"
+            onClick={() => setShowModal(true)}
+          >
+            <AiOutlineFileAdd /> Bild Hinzufügen
+          </button>
+        </div>
+        <Modal show={showModal} onClose={() => setShowModal(false)}>
+          <ImgUpload eventId={event.id} imageUploaded={imageUploaded} />
+        </Modal>
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ params: { id } }) {
+  const res = await fetch(`${API_URL}/festivals/${id}`);
+  const event = await res.json();
+
+  return {
+    props: {
+      event,
+    },
+  };
 }

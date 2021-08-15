@@ -1,28 +1,37 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   // background: #02182b;
-  background: #fff;
+  // background: #07004d;
+  background: #465362;
   color: #fff;
   height: 60px;
   width: 100%;
   padding: 0 30px;
+  z-index: 2;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10px;
 
   &__menu {
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 400;
+    font-size: 0.8rem;
     a {
-      color: #d7263d;
+      display: flex;
+      align-items: center;
+      color: #fff;
       margin-right: 20px;
       text-decoration: none;
       transition: all 0.2s ease-in-out;
+      height: 50px;
+
       &:hover {
-        color: #68c5db;
-        font-weight: 600;
-        transform: scale(1.5);
+        color: #0197f6;
+        // transform: scale(1.2);
+        border-bottom: 2px solid #0197f6;
       }
     }
   }
@@ -37,7 +46,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0197f6;
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -48,12 +56,45 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #0197f6;
+      // color: #0197f6;
+      color: #fff;
       text-decoration: none;
       margin-left: 10px;
     }
     &:hover {
       transform: scale(1.2);
+    }
+  }
+
+  &__login-btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 50px;
+    text-align: center;
+    background: #0197f6;
+    color: #fff !important;
+    font-weight: 500;
+    height: 40px !important;
+    &:hover {
+      transform: scale(0.8) !important;
+      border: none !important;
+    }
+  }
+
+  &__logout-btn {
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    background: #011936;
+    color: #fff !important;
+    font-weight: 500;
+    height: 40px !important;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    &:hover {
+      transform: scale(0.8) !important;
+      // border: none !important;
     }
   }
 }

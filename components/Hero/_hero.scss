@@ -25,6 +25,15 @@
     z-index: 20;
   }
 
+  &__center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    padding: 10px;
+  }
+
   h1 {
     font-size: 40px;
     display: flex;
@@ -35,12 +44,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0197f6;
     font-size: 4rem;
     font-weight: 700;
     text-transform: uppercase;
     transition: all 0.2s ease-in-out;
-    margin: 20px;
+    margin: 20px 0;
 
     a {
       display: flex;

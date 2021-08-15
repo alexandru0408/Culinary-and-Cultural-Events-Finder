@@ -8,7 +8,7 @@ export default function Footer() {
       <p>Copyright &copy; Street Food {actualDate}</p>
       <p>
         <Link href="/about">
-          <a>Street Food Project</a>
+          <a>Street Food Projekt</a>
         </Link>
       </p>
     </footer>

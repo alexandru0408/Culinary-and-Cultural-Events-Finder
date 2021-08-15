@@ -1,0 +1,64 @@
+.edit {
+  color: #fff;
+  h1,
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      height: 40px;
+      padding: 5px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+    }
+
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      margin: 20px 0 30px;
+      background-color: #d7263d;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  &__back {
+    display: block;
+    margin-bottom: 40px;
+    color: #0197f6;
+  }
+  &__add-image-btns {
+    margin-top: 10px;
+  }
+  &__add-image {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #0197f6;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 20px;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
