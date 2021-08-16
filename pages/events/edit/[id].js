@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { API_URL } from "@/config/index";
+import { parseCookie } from "@/utils/index";
 import Layout from "@/components/Layout/Layout";
 import Modal from "@/components/Modal/Modal";
 import ImgUpload from "@/components/ImgUpload/ImgUpload";
@@ -12,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import moment from "moment";
 
-export default function EditEventView({ event }) {
+export default function EditEventView({ event, token }) {
   const [values, setValues] = useState({
     name: event.name,
     countries: event.countries,
@@ -41,10 +42,15 @@ export default function EditEventView({ event }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
     if (!res.ok) {
+      if (res.status === 403 || res.status === 401) {
+        toast.error("Unauthorized");
+        return;
+      }
       toast.error("Etwas ist schiefgelaufen");
     } else {
       const event = await res.json();
@@ -154,20 +160,27 @@ export default function EditEventView({ event }) {
           </button>
         </div>
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <ImgUpload eventId={event.id} imageUploaded={imageUploaded} />
+          <ImgUpload
+            eventId={event.id}
+            imageUploaded={imageUploaded}
+            token={token}
+          />
         </Modal>
       </div>
     </Layout>
   );
 }
 
-export async function getServerSideProps({ params: { id } }) {
+export async function getServerSideProps({ params: { id }, req }) {
+  const { token } = parseCookie(req);
+
   const res = await fetch(`${API_URL}/festivals/${id}`);
   const event = await res.json();
 
   return {
     props: {
       event,
+      token,
     },
   };
 }

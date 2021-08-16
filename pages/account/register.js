@@ -16,6 +16,8 @@ export default function RegisterView() {
 
   const { register, error } = useContext(AuthContext);
 
+  useEffect(() => error && toast.error(error));
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -71,7 +73,7 @@ export default function RegisterView() {
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
           </div>
-          <input type="submit" value="Login" className="register__btn" />
+          <input type="submit" value="Registrieren" className="register__btn" />
         </form>
         <p>
           Schon ein Konto ? <Link href="/account/login">Login</Link>

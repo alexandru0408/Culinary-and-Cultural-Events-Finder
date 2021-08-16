@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { API_URL } from "@/config/index";
 import Layout from "@/components/Layout/Layout";
+import { parseCookie } from "@/utils/index";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AddEventView() {
+export default function AddEventView({ token }) {
   const [values, setValues] = useState({
     name: "",
     countries: "",
@@ -31,10 +32,15 @@ export default function AddEventView() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
     if (!res.ok) {
+      if (res.status === 403 || res.status === 401) {
+        toast.error("Unauthorized");
+        return;
+      }
       toast.error("Etwas ist schiefgelaufen");
     } else {
       const event = await res.json();
@@ -123,4 +129,14 @@ export default function AddEventView() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookie(req);
+
+  return {
+    props: {
+      token,
+    },
+  };
 }

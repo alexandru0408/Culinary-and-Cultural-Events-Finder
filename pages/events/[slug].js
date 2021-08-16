@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import FestivalMap from "@/components/FestivalMap/FestivalMap";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,39 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 export default function EventView({ event }) {
   const router = useRouter();
 
-  const deleteFestival = async (e) => {
-    if (confirm("Sind Sie sicher?")) {
-      const res = await fetch(`${API_URL}/festivals/${event.id}`, {
-        method: "DELETE",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.message);
-      } else {
-        router.push(`/events`);
-      }
-    }
-  };
-
   return (
     <Layout>
       <div className="event">
-        <div className="event__controls">
-          <Link href={`/events/edit/${event.id}`}>
-            <a className="event__edit">
-              <AiOutlineEdit size="1.1rem" />
-              Edit Festival
-            </a>
-          </Link>
-          <Link href="#">
-            <a className="event__delete" onClick={deleteFestival}>
-              <AiOutlineDelete size="1.1rem" />
-              Delete Festival
-            </a>
-          </Link>
-        </div>
         <span>
           {new Date(event.date).toLocaleString("de-DE")} um {event.time}
         </span>
@@ -65,6 +36,8 @@ export default function EventView({ event }) {
         <h3>Description:</h3>
         <p>{event.description}</p>
         <p>{event.address}</p>
+
+        <FestivalMap event={event} />
 
         <Link href="/events">
           <a className="event__back">{"<"} Zurück</a>

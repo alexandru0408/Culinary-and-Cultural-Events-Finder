@@ -8,18 +8,17 @@ import Link from "next/link";
 import Layout from "@/components/Layout/Layout";
 import AuthContext from "@/context/AuthContext";
 
-
 export default function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login, error } = useContext(AuthContext);
 
-   const { login, error } = useContext(AuthContext);
+  useEffect(() => error && toast.error(error));
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-   login({email,password})
+    login({ email, password });
   };
 
   return (

@@ -1,0 +1,45 @@
+.dashboard-event {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px #465362 solid;
+  background-color: #465362;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.7);
+
+  h4 {
+    margin-bottom: 10px;
+    flex: 2;
+    a {
+      color: #0197f6;
+      text-decoration: none;
+    }
+  }
+
+  &__edit,
+  &__delete {
+    margin: 10px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: #0197f6;
+    span {
+      display: inline-block;
+      margin: 0 5px;
+      font-size: 0.8rem;
+      color: #0197f6;
+    }
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &__delete {
+    span {
+      color: #d7263d ;
+    }
+  }
+}
